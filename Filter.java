@@ -6,33 +6,24 @@
  * @author Michael Kölling and David J. Barnes.
  * @version 1.0
  */
-public abstract class Filter
-{
-    private String name;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
-    /**
-     * Create a new filter with a given name.
-     * @param name The name of the filter.
-     */
-    public Filter(String name)
-    {
-        this.name = name;
+public class Filter {
+    public static void main(String[] args) {
+        try {
+            BufferedImage inputImage = ImageIO.read(new File("input.jpg"));
+
+            ImageIO.write(RedChannelFilter.apply(inputImage), "jpg", new File("red_channel.jpg"));
+            ImageIO.write(RedTintFilter.apply(inputImage), "jpg", new File("red_tint.jpg"));
+            ImageIO.write(WarholFilter.apply(inputImage), "jpg", new File("warhol.jpg"));
+            ImageIO.write(FlippedWarholFilter.apply(inputImage), "jpg", new File("flipped_warhol.jpg"));
+
+            System.out.println("Filters applied and saved!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
-    /**
-     * Return the name of this filter.
-     * 
-     * @return  The name of this filter.
-     */
-    public String getName()
-    {
-        return name;
-    }
-    
-    /**
-     * Apply this filter to an image.
-     * 
-     * @param  image  The image to be changed by this filter.
-     */
-    public abstract void apply(OFImage image);
 }
+
